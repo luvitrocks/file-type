@@ -41,28 +41,28 @@ function fileType (buffer)
     }
   end
 
-  if (buf[0] == 0x49 and buf[1] == 0x49 and buf[2] == 0x2A and buf[3] == 0x0) or (buf[0] == 0x4D and buf[1] == 0x4D and buf[2] == 0x0 and buf[3] == 0x2A)) {
+  if (buf[1] == '49' and buf[2] == '49' and buf[3] == '2A' and buf[4] == '0') or (buf[1] == '4D' and buf[2] == '4D' and buf[3] == '0' and buf[4] == '2A') then
     return {
       ext = 'tif',
       mime = 'image/tiff'
     }
-  }
+  end
 
-  if (buf[0] == 0x42 and buf[1] == 0x4D) {
+  if buf[1] == '42' and buf[2] == '4D' then
     return {
       ext = 'bmp',
       mime = 'image/bmp'
     }
-  }
+  end
 
-  if (buf[0] == 0x49 and buf[1] == 0x49 and buf[2] == 0xBC) {
+  if (buf[0] == '49' and buf[1] == '49' and buf[2] == 'BC') {
     return {
       ext = 'jxr',
       mime = 'image/vnd.ms-photo'
     }
   }
 
-  if (buf[0] == 0x38 and buf[1] == 0x42 and buf[2] == 0x50 and buf[3] == 0x53) {
+  if (buf[0] == '38' and buf[1] == '42' and buf[2] == '50' and buf[3] == '53') {
     return {
       ext = 'psd',
       mime = 'image/vnd.adobe.photoshop'
@@ -70,7 +70,7 @@ function fileType (buffer)
   }
 
   -- needs to be before `zip` check
-  if (buf[0] == 0x50 and buf[1] == 0x4B and buf[2] == 0x3 and buf[3] == 0x4 and buf[30] == 0x6D and buf[31] == 0x69 and buf[32] == 0x6D and buf[33] == 0x65 and buf[34] == 0x74 and buf[35] == 0x79 and buf[36] == 0x70 and buf[37] == 0x65 and buf[38] == 0x61 and buf[39] == 0x70 and buf[40] == 0x70 and buf[41] == 0x6C and buf[42] == 0x69 and buf[43] == 0x63 and buf[44] == 0x61 and buf[45] == 0x74 and buf[46] == 0x69 and buf[47] == 0x6F and buf[48] == 0x6E and buf[49] == 0x2F and buf[50] == 0x65 and buf[51] == 0x70 and buf[52] == 0x75 and buf[53] == 0x62 and buf[54] == 0x2B and buf[55] == 0x7A and buf[56] == 0x69 and buf[57] == 0x70) {
+  if (buf[0] == '50' and buf[1] == '4B' and buf[2] == '3' and buf[3] == '4' and buf[30] == '6D' and buf[31] == '69' and buf[32] == '6D' and buf[33] == '65' and buf[34] == '74' and buf[35] == '79' and buf[36] == '70' and buf[37] == '65' and buf[38] == '61' and buf[39] == '70' and buf[40] == '70' and buf[41] == '6C' and buf[42] == '69' and buf[43] == '63' and buf[44] == '61' and buf[45] == '74' and buf[46] == '69' and buf[47] == '6F' and buf[48] == '6E' and buf[49] == '2F' and buf[50] == '65' and buf[51] == '70' and buf[52] == '75' and buf[53] == '62' and buf[54] == '2B' and buf[55] == '7A' and buf[56] == '69' and buf[57] == '70') {
     return {
       ext = 'epub',
       mime = 'application/epub+zip'
@@ -79,56 +79,56 @@ function fileType (buffer)
 
   -- needs to be before `zip` check
   -- assumes signed .xpi from addons.mozilla.org
-  if (buf[0] == 0x50 and buf[1] == 0x4B and buf[2] == 0x3 and buf[3] == 0x4 and buf[30] == 0x4D and buf[31] == 0x45 and buf[32] == 0x54 and buf[33] == 0x41 and buf[34] == 0x2D and buf[35] == 0x49 and buf[36] == 0x4E and buf[37] == 0x46 and buf[38] == 0x2F and buf[39] == 0x6D and buf[40] == 0x6F and buf[41] == 0x7A and buf[42] == 0x69 and buf[43] == 0x6C and buf[44] == 0x6C and buf[45] == 0x61 and buf[46] == 0x2E and buf[47] == 0x72 and buf[48] == 0x73 and buf[49] == 0x61) {
+  if (buf[0] == '50' and buf[1] == '4B' and buf[2] == '3' and buf[3] == '4' and buf[30] == '4D' and buf[31] == '45' and buf[32] == '54' and buf[33] == '41' and buf[34] == '2D' and buf[35] == '49' and buf[36] == '4E' and buf[37] == '46' and buf[38] == '2F' and buf[39] == '6D' and buf[40] == '6F' and buf[41] == '7A' and buf[42] == '69' and buf[43] == '6C' and buf[44] == '6C' and buf[45] == '61' and buf[46] == '2E' and buf[47] == '72' and buf[48] == '73' and buf[49] == '61') {
     return {
       ext = 'xpi',
       mime = 'application/x-xpinstall'
     }
   }
 
-  if (buf[0] == 0x50 and buf[1] == 0x4B and (buf[2] == 0x3 or buf[2] == 0x5 or buf[2] == 0x7) and (buf[3] == 0x4 or buf[3] == 0x6 or buf[3] == 0x8)) {
+  if (buf[0] == '50' and buf[1] == '4B' and (buf[2] == '3' or buf[2] == '5' or buf[2] == '7') and (buf[3] == '4' or buf[3] == '6' or buf[3] == '8')) {
     return {
       ext = 'zip',
       mime = 'application/zip'
     }
   }
 
-  if (buf[257] == 0x75 and buf[258] == 0x73 and buf[259] == 0x74 and buf[260] == 0x61 and buf[261] == 0x72) {
+  if (buf[257] == '75' and buf[258] == '73' and buf[259] == '74' and buf[260] == '61' and buf[261] == '72') {
     return {
       ext = 'tar',
       mime = 'application/x-tar'
     }
   }
 
-  if (buf[0] == 0x52 and buf[1] == 0x61 and buf[2] == 0x72 and buf[3] == 0x21 and buf[4] == 0x1A and buf[5] == 0x7 and (buf[6] == 0x0 or buf[6] == 0x1)) {
+  if (buf[0] == '52' and buf[1] == '61' and buf[2] == '72' and buf[3] == '21' and buf[4] == '1A' and buf[5] == '7' and (buf[6] == '0' or buf[6] == '1')) {
     return {
       ext = 'rar',
       mime = 'application/x-rar-compressed'
     }
   }
 
-  if (buf[0] == 0x1F and buf[1] == 0x8B and buf[2] == 0x8) {
+  if (buf[0] == '1F' and buf[1] == '8B' and buf[2] == '8') {
     return {
       ext = 'gz',
       mime = 'application/gzip'
     }
   }
 
-  if (buf[0] == 0x42 and buf[1] == 0x5A and buf[2] == 0x68) {
+  if (buf[0] == '42' and buf[1] == '5A' and buf[2] == '68') {
     return {
       ext = 'bz2',
       mime = 'application/x-bzip2'
     }
   }
 
-  if (buf[0] == 0x37 and buf[1] == 0x7A and buf[2] == 0xBC and buf[3] == 0xAF and buf[4] == 0x27 and buf[5] == 0x1C) {
+  if (buf[0] == '37' and buf[1] == '7A' and buf[2] == 'BC' and buf[3] == 'AF' and buf[4] == '27' and buf[5] == '1C') {
     return {
       ext = '7z',
       mime = 'application/x-7z-compressed'
     }
   }
 
-  if (buf[0] == 0x78 and buf[1] == 0x01) {
+  if (buf[0] == '78' and buf[1] == '01') {
     return {
       ext = 'dmg',
       mime = 'application/x-apple-diskimage'
@@ -136,11 +136,11 @@ function fileType (buffer)
   }
 
   if (
-    (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and (buf[3] == 0x18 or buf[3] == 0x20) and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70) or
-    (buf[0] == 0x33 and buf[1] == 0x67 and buf[2] == 0x70 and buf[3] == 0x35) or
-    (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and buf[3] == 0x1C and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70 and buf[8] == 0x6D and buf[9] == 0x70 and buf[10] == 0x34 and buf[11] == 0x32 and buf[16] == 0x6D and buf[17] == 0x70 and buf[18] == 0x34 and buf[19] == 0x31 and buf[20] == 0x6D and buf[21] == 0x70 and buf[22] == 0x34 and buf[23] == 0x32 and buf[24] == 0x69 and buf[25] == 0x73 and buf[26] == 0x6F and buf[27] == 0x6D) or
-    (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and buf[3] == 0x1C and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70 and buf[8] == 0x69 and buf[9] == 0x73 and buf[10] == 0x6F and buf[11] == 0x6D) or
-    (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and buf[3] == 0x1c and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70 and buf[8] == 0x6D and buf[9] == 0x70 and buf[10] == 0x34 and buf[11] == 0x32 and buf[12] == 0x0 and buf[13] == 0x0 and buf[14] == 0x0 and buf[15] == 0x0)
+    (buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and (buf[3] == '18' or buf[3] == '20') and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70') or
+    (buf[0] == '33' and buf[1] == '67' and buf[2] == '70' and buf[3] == '35') or
+    (buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and buf[3] == '1C' and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70' and buf[8] == '6D' and buf[9] == '70' and buf[10] == '34' and buf[11] == '32' and buf[16] == '6D' and buf[17] == '70' and buf[18] == '34' and buf[19] == '31' and buf[20] == '6D' and buf[21] == '70' and buf[22] == '34' and buf[23] == '32' and buf[24] == '69' and buf[25] == '73' and buf[26] == '6F' and buf[27] == '6D') or
+    (buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and buf[3] == '1C' and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70' and buf[8] == '69' and buf[9] == '73' and buf[10] == '6F' and buf[11] == '6D') or
+    (buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and buf[3] == '1c' and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70' and buf[8] == '6D' and buf[9] == '70' and buf[10] == '34' and buf[11] == '32' and buf[12] == '0' and buf[13] == '0' and buf[14] == '0' and buf[15] == '0')
   ) {
     return {
       ext = 'mp4',
@@ -148,14 +148,14 @@ function fileType (buffer)
     }
   }
 
-  if ((buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and buf[3] == 0x1C and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70 and buf[8] == 0x4D and buf[9] == 0x34 and buf[10] == 0x56)) {
+  if ((buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and buf[3] == '1C' and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70' and buf[8] == '4D' and buf[9] == '34' and buf[10] == '56')) {
     return {
       ext = 'm4v',
       mime = 'video/x-m4v'
     }
   }
 
-  if (buf[0] == 0x4D and buf[1] == 0x54 and buf[2] == 0x68 and buf[3] == 0x64) {
+  if (buf[0] == '4D' and buf[1] == '54' and buf[2] == '68' and buf[3] == '64') {
     return {
       ext = 'mid',
       mime = 'audio/midi'
@@ -163,56 +163,56 @@ function fileType (buffer)
   }
 
   -- needs to be before the `webm` check
-  if (buf[31] == 0x6D and buf[32] == 0x61 and buf[33] == 0x74 and buf[34] == 0x72 and buf[35] == 0x6f and buf[36] == 0x73 and buf[37] == 0x6B and buf[38] == 0x61) {
+  if (buf[31] == '6D' and buf[32] == '61' and buf[33] == '74' and buf[34] == '72' and buf[35] == '6f' and buf[36] == '73' and buf[37] == '6B' and buf[38] == '61') {
     return {
       ext = 'mkv',
       mime = 'video/x-matroska'
     }
   }
 
-  if (buf[0] == 0x1A and buf[1] == 0x45 and buf[2] == 0xDF and buf[3] == 0xA3) {
+  if (buf[0] == '1A' and buf[1] == '45' and buf[2] == 'DF' and buf[3] == 'A3') {
     return {
       ext = 'webm',
       mime = 'video/webm'
     }
   }
 
-  if (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x0 and buf[3] == 0x14 and buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70) {
+  if (buf[0] == '0' and buf[1] == '0' and buf[2] == '0' and buf[3] == '14' and buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70') {
     return {
       ext = 'mov',
       mime = 'video/quicktime'
     }
   }
 
-  if (buf[0] == 0x52 and buf[1] == 0x49 and buf[2] == 0x46 and buf[3] == 0x46 and buf[8] == 0x41 and buf[9] == 0x56 and buf[10] == 0x49) {
+  if (buf[0] == '52' and buf[1] == '49' and buf[2] == '46' and buf[3] == '46' and buf[8] == '41' and buf[9] == '56' and buf[10] == '49') {
     return {
       ext = 'avi',
       mime = 'video/x-msvideo'
     }
   }
 
-  if (buf[0] == 0x30 and buf[1] == 0x26 and buf[2] == 0xB2 and buf[3] == 0x75 and buf[4] == 0x8E and buf[5] == 0x66 and buf[6] == 0xCF and buf[7] == 0x11 and buf[8] == 0xA6 and buf[9] == 0xD9) {
+  if (buf[0] == '30' and buf[1] == '26' and buf[2] == 'B2' and buf[3] == '75' and buf[4] == '8E' and buf[5] == '66' and buf[6] == 'CF' and buf[7] == '11' and buf[8] == 'A6' and buf[9] == 'D9') {
     return {
       ext = 'wmv',
       mime = 'video/x-ms-wmv'
     }
   }
 
-  if (buf[0] == 0x0 and buf[1] == 0x0 and buf[2] == 0x1 and buf[3].toString(16)[0] == 'b') {
+  if (buf[0] == '0' and buf[1] == '0' and buf[2] == '1' and buf[3].toString(16)[0] == 'b') {
     return {
       ext = 'mpg',
       mime = 'video/mpeg'
     }
   }
 
-  if ((buf[0] == 0x49 and buf[1] == 0x44 and buf[2] == 0x33) or (buf[0] == 0xFF and buf[1] == 0xfb)) {
+  if ((buf[0] == '49' and buf[1] == '44' and buf[2] == '33') or (buf[0] == 'FF' and buf[1] == 'fb')) {
     return {
       ext = 'mp3',
       mime = 'audio/mpeg'
     }
   }
 
-  if ((buf[4] == 0x66 and buf[5] == 0x74 and buf[6] == 0x79 and buf[7] == 0x70 and buf[8] == 0x4D and buf[9] == 0x34 and buf[10] == 0x41) or (buf[0] == 0x4D and buf[1] == 0x34 and buf[2] == 0x41 and buf[3] == 0x20)) {
+  if ((buf[4] == '66' and buf[5] == '74' and buf[6] == '79' and buf[7] == '70' and buf[8] == '4D' and buf[9] == '34' and buf[10] == '41') or (buf[0] == '4D' and buf[1] == '34' and buf[2] == '41' and buf[3] == '20')) {
     return {
       ext = 'm4a',
       mime = 'audio/m4a'
@@ -220,63 +220,63 @@ function fileType (buffer)
   }
 
   -- needs to be before `ogg` check
-  if (buf[28] == 0x4F and buf[29] == 0x70 and buf[30] == 0x75 and buf[31] == 0x73 and buf[32] == 0x48 and buf[33] == 0x65 and buf[34] == 0x61 and buf[35] == 0x64) {
+  if (buf[28] == '4F' and buf[29] == '70' and buf[30] == '75' and buf[31] == '73' and buf[32] == '48' and buf[33] == '65' and buf[34] == '61' and buf[35] == '64') {
     return {
       ext = 'opus',
       mime = 'audio/opus'
     }
   }
 
-  if (buf[0] == 0x4F and buf[1] == 0x67 and buf[2] == 0x67 and buf[3] == 0x53) {
+  if (buf[0] == '4F' and buf[1] == '67' and buf[2] == '67' and buf[3] == '53') {
     return {
       ext = 'ogg',
       mime = 'audio/ogg'
     }
   }
 
-  if (buf[0] == 0x66 and buf[1] == 0x4C and buf[2] == 0x61 and buf[3] == 0x43) {
+  if (buf[0] == '66' and buf[1] == '4C' and buf[2] == '61' and buf[3] == '43') {
     return {
       ext = 'flac',
       mime = 'audio/x-flac'
     }
   }
 
-  if (buf[0] == 0x52 and buf[1] == 0x49 and buf[2] == 0x46 and buf[3] == 0x46 and buf[8] == 0x57 and buf[9] == 0x41 and buf[10] == 0x56 and buf[11] == 0x45) {
+  if (buf[0] == '52' and buf[1] == '49' and buf[2] == '46' and buf[3] == '46' and buf[8] == '57' and buf[9] == '41' and buf[10] == '56' and buf[11] == '45') {
     return {
       ext = 'wav',
       mime = 'audio/x-wav'
     }
   }
 
-  if (buf[0] == 0x23 and buf[1] == 0x21 and buf[2] == 0x41 and buf[3] == 0x4D and buf[4] == 0x52 and buf[5] == 0x0A) {
+  if (buf[0] == '23' and buf[1] == '21' and buf[2] == '41' and buf[3] == '4D' and buf[4] == '52' and buf[5] == '0A') {
     return {
       ext = 'amr',
       mime = 'audio/amr'
     }
   }
 
-  if (buf[0] == 0x25 and buf[1] == 0x50 and buf[2] == 0x44 and buf[3] == 0x46) {
+  if (buf[0] == '25' and buf[1] == '50' and buf[2] == '44' and buf[3] == '46') {
     return {
       ext = 'pdf',
       mime = 'application/pdf'
     }
   }
 
-  if (buf[0] == 0x4D and buf[1] == 0x5A) {
+  if (buf[0] == '4D' and buf[1] == '5A') {
     return {
       ext = 'exe',
       mime = 'application/x-msdownload'
     }
   }
 
-  if ((buf[0] == 0x43 or buf[0] == 0x46) and buf[1] == 0x57 and buf[2] == 0x53) {
+  if ((buf[0] == '43' or buf[0] == '46') and buf[1] == '57' and buf[2] == '53') {
     return {
       ext = 'swf',
       mime = 'application/x-shockwave-flash'
     }
   }
 
-  if (buf[0] == 0x7B and buf[1] == 0x5C and buf[2] == 0x72 and buf[3] == 0x74 and buf[4] == 0x66) {
+  if (buf[0] == '7B' and buf[1] == '5C' and buf[2] == '72' and buf[3] == '74' and buf[4] == '66') {
     return {
       ext = 'rtf',
       mime = 'application/rtf'
@@ -284,10 +284,10 @@ function fileType (buffer)
   }
 
   if (
-    (buf[0] == 0x77 and buf[1] == 0x4F and buf[2] == 0x46 and buf[3] == 0x46) &&
+    (buf[0] == '77' and buf[1] == '4F' and buf[2] == '46' and buf[3] == '46') &&
     (
-      (buf[4] == 0x00 and buf[5] == 0x01 and buf[6] == 0x00 and buf[7] == 0x00) or
-      (buf[4] == 0x4F and buf[5] == 0x54 and buf[6] == 0x54 and buf[7] == 0x4F)
+      (buf[4] == '00' and buf[5] == '01' and buf[6] == '00' and buf[7] == '00') or
+      (buf[4] == '4F' and buf[5] == '54' and buf[6] == '54' and buf[7] == '4F')
     )
   ) {
     return {
@@ -297,10 +297,10 @@ function fileType (buffer)
   }
 
   if (
-    (buf[0] == 0x77 and buf[1] == 0x4F and buf[2] == 0x46 and buf[3] == 0x32) &&
+    (buf[0] == '77' and buf[1] == '4F' and buf[2] == '46' and buf[3] == '32') &&
     (
-      (buf[4] == 0x00 and buf[5] == 0x01 and buf[6] == 0x00 and buf[7] == 0x00) or
-      (buf[4] == 0x4F and buf[5] == 0x54 and buf[6] == 0x54 and buf[7] == 0x4F)
+      (buf[4] == '00' and buf[5] == '01' and buf[6] == '00' and buf[7] == '00') or
+      (buf[4] == '4F' and buf[5] == '54' and buf[6] == '54' and buf[7] == '4F')
     )
   ) {
     return {
@@ -309,77 +309,77 @@ function fileType (buffer)
     }
   }
 
-  if (buf[34] == 0x4C and buf[35] == 0x50) and ((buf[8] == 0x00 and buf[9] == 0x00 and buf[10] == 0x01) or (buf[8] == 0x01 and buf[9] == 0x00 and buf[10] == 0x02) or (buf[8] == 0x02 and buf[9] == 0x00 and buf[10] == 0x02)) {
+  if (buf[34] == '4C' and buf[35] == '50') and ((buf[8] == '00' and buf[9] == '00' and buf[10] == '01') or (buf[8] == '01' and buf[9] == '00' and buf[10] == '02') or (buf[8] == '02' and buf[9] == '00' and buf[10] == '02')) {
     return {
       ext = 'eot',
       mime = 'application/octet-stream'
     }
   }
 
-  if (buf[0] == 0x00 and buf[1] == 0x01 and buf[2] == 0x00 and buf[3] == 0x00 and buf[4] == 0x00) {
+  if (buf[0] == '00' and buf[1] == '01' and buf[2] == '00' and buf[3] == '00' and buf[4] == '00') {
     return {
       ext = 'ttf',
       mime = 'application/font-sfnt'
     }
   }
 
-  if (buf[0] == 0x4F and buf[1] == 0x54 and buf[2] == 0x54 and buf[3] == 0x4F and buf[4] == 0x00) {
+  if (buf[0] == '4F' and buf[1] == '54' and buf[2] == '54' and buf[3] == '4F' and buf[4] == '00') {
     return {
       ext = 'otf',
       mime = 'application/font-sfnt'
     }
   }
 
-  if (buf[0] == 0x00 and buf[1] == 0x00 and buf[2] == 0x01 and buf[3] == 0x00) {
+  if (buf[0] == '00' and buf[1] == '00' and buf[2] == '01' and buf[3] == '00') {
     return {
       ext = 'ico',
       mime = 'image/x-icon'
     }
   }
 
-  if (buf[0] == 0x46 and buf[1] == 0x4C and buf[2] == 0x56 and buf[3] == 0x01) {
+  if (buf[0] == '46' and buf[1] == '4C' and buf[2] == '56' and buf[3] == '01') {
     return {
       ext = 'flv',
       mime = 'video/x-flv'
     }
   }
 
-  if (buf[0] == 0x25 and buf[1] == 0x21) {
+  if (buf[0] == '25' and buf[1] == '21') {
     return {
       ext = 'ps',
       mime = 'application/postscript'
     }
   }
 
-  if (buf[0] == 0xFD and buf[1] == 0x37 and buf[2] == 0x7A and buf[3] == 0x58 and buf[4] == 0x5A and buf[5] == 0x00) {
+  if (buf[0] == 'FD' and buf[1] == '37' and buf[2] == '7A' and buf[3] == '58' and buf[4] == '5A' and buf[5] == '00') {
     return {
       ext = 'xz',
       mime = 'application/x-xz'
     }
   }
 
-  if (buf[0] == 0x53 and buf[1] == 0x51 and buf[2] == 0x4C and buf[3] == 0x69) {
+  if (buf[0] == '53' and buf[1] == '51' and buf[2] == '4C' and buf[3] == '69') {
     return {
       ext = 'sqlite',
       mime = 'application/x-sqlite3'
     }
   }
 
-  if (buf[0] == 0x4E and buf[1] == 0x45 and buf[2] == 0x53 and buf[3] == 0x1A) {
+  if (buf[0] == '4E' and buf[1] == '45' and buf[2] == '53' and buf[3] == '1A') {
     return {
       ext = 'nes',
       mime = 'application/x-nintendo-nes-rom'
     }
   }
 
-  if (buf[0] == 0x43 and buf[1] == 0x72 and buf[2] == 0x32 and buf[3] == 0x34) {
+  if (buf[0] == '43' and buf[1] == '72' and buf[2] == '32' and buf[3] == '34') {
     return {
       ext = 'crx',
       mime = 'application/x-google-chrome-extension'
     }
   }
 
-  if (buf[0] == 0x4D and buf[1] == 0x53 and buf[2] == 0x43 and buf[3] == 0x46) or (buf[0] == 0x49 and buf[1] == 0x53 and buf[2] == 0x63 and buf[3] == 0x28) {
+  if (buf[0] == '4D' and buf[1] == '53' and buf[2] == '43' and buf[3] == '46') or (buf[0] == '49' and buf[1] == '53' and buf[2] == '63' and buf[3] == '28') {
     return {
       ext = 'cab',
       mime = 'application/vnd.ms-cab-compressed'
@@ -387,42 +387,42 @@ function fileType (buffer)
   }
 
   -- needs to be before `ar` check
-  if (buf[0] == 0x21 and buf[1] == 0x3C and buf[2] == 0x61 and buf[3] == 0x72 and buf[4] == 0x63 and buf[5] == 0x68 and buf[6] == 0x3E and buf[7] == 0x0A and buf[8] == 0x64 and buf[9] == 0x65 and buf[10] == 0x62 and buf[11] == 0x69 and buf[12] == 0x61 and buf[13] == 0x6E and buf[14] == 0x2D and buf[15] == 0x62 and buf[16] == 0x69 and buf[17] == 0x6E and buf[18] == 0x61 and buf[19] == 0x72 and buf[20] == 0x79) {
+  if (buf[0] == '21' and buf[1] == '3C' and buf[2] == '61' and buf[3] == '72' and buf[4] == '63' and buf[5] == '68' and buf[6] == '3E' and buf[7] == '0A' and buf[8] == '64' and buf[9] == '65' and buf[10] == '62' and buf[11] == '69' and buf[12] == '61' and buf[13] == '6E' and buf[14] == '2D' and buf[15] == '62' and buf[16] == '69' and buf[17] == '6E' and buf[18] == '61' and buf[19] == '72' and buf[20] == '79') {
     return {
       ext = 'deb',
       mime = 'application/x-deb'
     }
   }
 
-  if (buf[0] == 0x21 and buf[1] == 0x3C and buf[2] == 0x61 and buf[3] == 0x72 and buf[4] == 0x63 and buf[5] == 0x68 and buf[6] == 0x3E) {
+  if (buf[0] == '21' and buf[1] == '3C' and buf[2] == '61' and buf[3] == '72' and buf[4] == '63' and buf[5] == '68' and buf[6] == '3E') {
     return {
       ext = 'ar',
       mime = 'application/x-unix-archive'
     }
   }
 
-  if (buf[0] == 0xED and buf[1] == 0xAB and buf[2] == 0xEE and buf[3] == 0xDB) {
+  if (buf[0] == 'ED' and buf[1] == 'AB' and buf[2] == 'EE' and buf[3] == 'DB') {
     return {
       ext = 'rpm',
       mime = 'application/x-rpm'
     }
   }
 
-  if (buf[0] == 0x1F and buf[1] == 0xA0) or (buf[0] == 0x1F and buf[1] == 0x9D) {
+  if (buf[0] == '1F' and buf[1] == 'A0') or (buf[0] == '1F' and buf[1] == '9D') {
     return {
       ext = 'Z',
       mime = 'application/x-compress'
     }
   }
 
-  if (buf[0] == 0x4C and buf[1] == 0x5A and buf[2] == 0x49 and buf[3] == 0x50) {
+  if (buf[0] == '4C' and buf[1] == '5A' and buf[2] == '49' and buf[3] == '50') {
     return {
       ext = 'lz',
       mime = 'application/x-lzip'
     }
   }
 
-  if (buf[0] == 0xD0 and buf[1] == 0xCF and buf[2] == 0x11 and buf[3] == 0xE0 and buf[4] == 0xA1 and buf[5] == 0xB1 and buf[6] == 0x1A and buf[7] == 0xE1) {
+  if (buf[0] == 'D0' and buf[1] == 'CF' and buf[2] == '11' and buf[3] == 'E0' and buf[4] == 'A1' and buf[5] == 'B1' and buf[6] == '1A' and buf[7] == 'E1') {
     return {
       ext = 'msi',
       mime = 'application/x-msi'

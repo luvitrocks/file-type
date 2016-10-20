@@ -101,9 +101,9 @@ It only needs the first 262 bytes.
 - [`lz`](https://en.wikipedia.org/wiki/Lzip)
 - [`msi`](https://en.wikipedia.org/wiki/Windows_Installer)
 
-**SVG isn't included as it requires the whole file to be read.**
+_SVG isn't included as it requires the whole file to be read._
 
-**PR welcome for additional commonly used file types.**
+_PR welcome for additional commonly used file types._
 
 ## License
 
